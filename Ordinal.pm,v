@@ -1,9 +1,29 @@
-head	2.5;
+head	2.9;
 access;
 symbols;
 locks; strict;
 comment	@# @;
 
+
+2.9
+date	2000.02.20.23.10.43;	author end70;	state Exp;
+branches;
+next	2.8;
+
+2.8
+date	2000.02.20.23.07.36;	author end70;	state Exp;
+branches;
+next	2.7;
+
+2.7
+date	2000.02.20.23.07.26;	author end70;	state Exp;
+branches;
+next	2.6;
+
+2.6
+date	2000.02.17.19.01.06;	author end70;	state Exp;
+branches;
+next	2.5;
 
 2.5
 date	2000.02.17.17.10.44;	author end70;	state Exp;
@@ -35,7 +55,7 @@ desc
 @@
 
 
-2.5
+2.9
 log
 @*** empty log message ***
 @
@@ -55,6 +75,9 @@ Date::Ordinal - Conversion of dates to ordinal numbers and vice versa
     $mon     = ord2month(1);                   # $mon gets 'January'
     $mon     = ord2month('01');                # $mon gets 'January'
     $arryref = all_month_ordinations
+    @@arry    = all_month_names
+    $arryref = all_month_names_ref
+    $arryref = all_short_month_names_ref
     $arryref = all_day_ordinations
 
     $arryref = all_hour_ordinations
@@ -91,7 +114,7 @@ use Carp;
 #	Public Global Variables
 #-----------------------------------------------------------------------
 use vars qw($VERSION @@ISA @@EXPORT @@EXPORT_OK);
-$VERSION   = '2.4';
+$VERSION   = '2.9';
 @@ISA       = qw(Exporter);
 @@EXPORT    = qw(ord2month month2ord ordination_month_pair all_month_ordinationsall_day_ordinations all_hour_ordinations all_minute_ordinations prezero);
 
@@ -116,7 +139,7 @@ not a valid number, then C<undef> will be returned:
 
     $mon = ord2month('3');
 
-=item month2ord()
+=item C<month2ord()>
 
 This function takes a month name and returns the integer
 corresponding to the month name, if such exists.
@@ -158,7 +181,7 @@ sub month2ord
     my $month_count;
 
     for ($month_count=0; $month_count < 12; ++$month_count) {
-	return ++$month_count if ($month[$month_count] =~ $month);
+	return ++$month_count if ($month[$month_count] =~ /$month/);
     }
 
     return undef;
@@ -181,6 +204,10 @@ obtain a list of all month names:
 =item C<all_month_names_ref()>
 
     Returns a reference to a list of all month names;
+
+=item C<all_short_month_names_ref()>
+
+    Returns a reference to a list of all month names in 3-letter form
 
 =item C<ordination_month_pair()>
 
@@ -205,6 +232,11 @@ sub all_month_names
 sub all_month_names_ref
 {
     return \@@month;
+}
+
+sub all_short_month_names_ref
+{
+    return \@@short_month;
 }
 
 sub ordination_month_pair
@@ -323,9 +355,59 @@ modify it under the same terms as Perl itself.
 	  August September October November December
 	  );
 
+@@short_month = map { substr($_,0,3) } @@month;
+
 
 1;
 
+@
+
+
+2.8
+log
+@*** empty log message ***
+@
+text
+@d55 1
+a55 1
+$VERSION   = '2.8';
+@
+
+
+2.7
+log
+@*** empty log message ***
+@
+text
+@d55 1
+a55 1
+$VERSION   = '2.4';
+@
+
+
+2.6
+log
+@*** empty log message ***
+@
+text
+@d16 3
+d80 1
+a80 1
+=item month2ord()
+d146 4
+d175 5
+d295 2
+@
+
+
+2.5
+log
+@*** empty log message ***
+@
+text
+@d119 1
+a119 1
+	return ++$month_count if ($month[$month_count] =~ $month);
 @
 
 
