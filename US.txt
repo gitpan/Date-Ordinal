@@ -1,0 +1,118 @@
+NAME
+    Locale::US - two letter codes for state identification in the United
+    States and vice versa.
+
+SYNOPSIS
+        use Locale::US;
+        
+        $state   = code2state('AL');               # $state gets 'Alabama'
+        $code    = state2code('Alabama');          # $code gets 'AL'
+        
+        @codes   = all_state_codes();
+        @names   = all_state_names();
+        
+    =cut
+
+    #-----------------------------------------------------------------------
+
+    package Locale::US; use strict;
+
+    #-----------------------------------------------------------------------
+
+DESCRIPTION
+    The `Locale::US' module provides access to the two-letter codes for
+    identifying states in the United States. You can either access the codes
+    via the the section on "conversion routines" (described below), or with
+    the two functions which return lists of all states codes or all state
+    names.
+
+CONVERSION ROUTINES
+    There are two conversion routines: `code2state()' and `state2code()'.
+
+    code2state()
+            This function takes a two letter state code and returns a string
+            which contains the name of the state identified. If the code is
+            not a valid state code, then `undef' will be returned:
+
+                $state = code2state('CA');
+
+    state2code()
+            This function takes a state name and returns the corresponding
+            two letter state code, if such exists. If the argument could not
+            be identified as a state name, then `undef' will be returned:
+
+                $code = state2code('California');
+
+            The case of the state name is not important. See the section the
+            section on "KNOWN BUGS AND LIMITATIONS" below.
+
+QUERY ROUTINES
+    There are two function which can be used to obtain a list of all codes,
+    or all state names:
+
+    `all_state_codes()'
+            Returns a list of all two-letter state codes. The codes are
+            guaranteed to be all lower-case, and not in any particular
+            order.
+
+    `all_state_names()'
+            Returns a list of all state names for which there is a
+            corresponding two-letter state code. The names are capitalised,
+            and not returned in any particular order.
+
+EXAMPLES
+    The following example illustrates use of the `code2state()' function.
+    The user is prompted for a state code, and then told the corresponding
+    country name:
+
+        $| = 1;   # turn off buffering
+        
+        print "Enter state code: ";
+        chop($code = <STDIN>);
+        $state = code2state($code);
+        if (defined $state)
+        {
+            print "$code = $state\n";
+        }
+        else
+        {
+            print "'$code' is not a valid state code!\n";
+        }
+
+KNOWN BUGS AND LIMITATIONS
+    *   When using `state2code()', the country name must currently appear
+        exactly as it does in the source of the module. For example,
+
+            state2code('Alabama')
+
+        will return AL, as expected. But the following will all return
+        `undef':
+
+            state2code('Alabama ')
+            state2code(' Alabama')
+
+        If there's need for it, a future version could have variants for
+        state names.
+
+    *   In the current implementation, all data is read in when the module is
+        loaded, and then held in memory. A lazy implementation would be more
+        memory friendly.
+
+SEE ALSO
+    Locale::Country
+    http://www.usps.gov/ncsc/lookups/usps_abbreviations.htm
+        Online file with the USPS two-letter codes for the United States and
+        its possessions.
+
+AUXILLIARY CODE:
+    lynx -dump http://www.usps.gov/ncsc/lookups/usps_abbreviations.htm > kruft.txt
+    kruft2codes.pl
+AUTHOR
+    Terrence Brannon <tbrannon@end70.com>
+
+COPYRIGHT
+    Copyright (c) 1999 End70 Corporation
+
+    This module is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
+
