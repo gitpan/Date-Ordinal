@@ -1,5 +1,6 @@
 NAME
-    Date::Ordinal - Conversion of dates to ordinal numbers and vice versa
+    Date::Ordinal - Conversion of dates to ordinal numbers and vice
+    versa
 
 SYNOPSIS
         use Date::Ordinal;
@@ -8,56 +9,73 @@ SYNOPSIS
         $mon     = ord2month('1');                 # $mon gets 'January'
         $mon     = ord2month(1);                   # $mon gets 'January'
         $mon     = ord2month('01');                # $mon gets 'January'
+        $arryref = all_month_ordinations
+        $arryref = all_day_ordinations
+
+
+        $hashref = ordination_month_pair # {'January' => 01, ... }
+        @day     = days
 
         
     =cut
 
-    #----------------------------------------------------------------------
-    -
+    #---------------------------------------------------------------
+    --------
 
-        package Date::Ordinal;
-    #use strict;
+    package Date::Ordinal; #use strict;
 
-    #----------------------------------------------------------------------
-    -
+    #---------------------------------------------------------------
+    --------
 
 DESCRIPTION
-    The `Locale::US' module provides access to the two-letter codes for
-    identifying states in the United States. You can either access the
-    codes via the the section on "conversion routines" (described below),
-    or with the two functions which return lists of all states codes or all
-    state names.
+    This module is designed to aid in creation of CGI popup_menus
+    and also interaction with SQL databases.
 
 CONVERSION ROUTINES
-    There are two conversion routines: `ord2month()' and `month2ord()'.
+    There are two conversion routines: `ord2month()' and
+    `month2ord()'.
 
     ord2month()
-            This function takes a month number [1..12] and returns a string
-            which contains the name of the month identified. If the number
-            is not a valid number, then `undef' will be returned:
+            This function takes a month number [1..12] and returns a
+            string which contains the name of the month identified.
+            If the number is not a valid number, then `undef' will
+            be returned:
 
                 $mon = ord2month('3');
 
     month2ord()
             This function takes a month name and returns the integer
             corresponding to the month name, if such exists. If the
-            argument could not be identified as a month name, then `undef'
-            will be returned:
+            argument could not be identified as a month name, then
+            `undef' will be returned:
 
                 $ord = month2ord('March');
 
-            The case of the month name is not important. See the section
-            the section on "KNOWN BUGS AND LIMITATIONS" below.
+            The case of the month name is not important. See the
+            section the section on "KNOWN BUGS AND LIMITATIONS"
+            below.
 
 QUERY ROUTINES
-    There is one function (and a reference variant) which can be used to
-    obtain a list of all month names:
+    There is one function (and a reference variant) which can be
+    used to obtain a list of all month names:
 
     `all_month_names()'
                 Returns a list of all month names;
 
     `all_month_names_ref()'
                 Returns a reference to a list of all month names;
+
+    `ordination_month_pair()'
+                returns a reference to a hash of the ordination of a month name
+                and the month name
+
+    `all_month_ordinations()'
+                returns a reference  a hash of the ordination of a month name
+                and the month name
+
+PRETTY-PRINTING ROUTINES
+    `prezero()'
+                if the current number is single-diit, prefix it with a '0'
 
 KNOWN BUGS AND LIMITATIONS
     none
@@ -69,8 +87,8 @@ AUTHOR
     Terrence Brannon <tbrannon@end70.com>
 
 COPYRIGHT
-    Copyright (c) 1999 End70 Corporation
+    Copyright (c) 2000 End70 Corporation
 
-    This module is free software; you can redistribute it and/or modify it
-    under the same terms as Perl itself.
+    This module is free software; you can redistribute it and/or
+    modify it under the same terms as Perl itself.
 
